@@ -1,8 +1,12 @@
 import "./index.css";
 
-const bodyElement = document.querySelector("body");
+const navDivs = document.querySelectorAll("nav div");
 
-const h1Element = document.createElement("h1");
-h1Element.textContent = "Todo List";
-
-bodyElement.appendChild(h1Element);
+navDivs.forEach((div) => {
+  div.addEventListener("click", () => {
+    navDivs.forEach((div) => {
+      div.classList.remove("focus");
+    });
+    div.classList.add("focus");
+  });
+});
