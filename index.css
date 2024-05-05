@@ -18,6 +18,11 @@
   --x-small: 4px;
 
   /* Others */
+  --shadow-style-1: 1px 2px 3px var(--light-black);
+  --shadow-style-2: 0 0 var(--small) var(--light-black);
+
+  --add-icon-size-1: 56px;
+  --add-icon-size-2: 50px;
 }
 
 /* Apply general styling and reset */
@@ -54,6 +59,7 @@ body {
   grid-template-columns: 1fr 4fr;
 }
 
+/* Style sidebar section of app */
 aside {
   background-color: var(--blue-color);
   color: var(--white-color);
@@ -100,6 +106,69 @@ nav div:active {
   background-color: var(--dark-blue);
 }
 
+/* Style main section of app */
 main {
   height: 100vh;
+}
+
+.add-icon {
+  position: absolute;
+  bottom: var(--big);
+  right: var(--big);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--add-icon-size-1);
+  height: var(--add-icon-size-1);
+  box-shadow: var(--shadow-style-2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.add-icon:hover {
+  transform: scale(1.1);
+}
+
+.add-icon:active {
+  transform: scale(0.9);
+}
+
+.add-icon .mdi {
+  font-size: var(--add-icon-size-1);
+}
+
+@media screen and (max-width: 425px) {
+  body {
+    display: block;
+  }
+
+  aside {
+    display: flex;
+    flex-direction: column;
+  }
+
+  aside .logo-link {
+    margin: auto;
+  }
+
+  aside nav {
+    flex-direction: row;
+    margin: auto;
+  }
+
+  main {
+    height: auto;
+  }
+
+  .add-icon {
+    width: var(--add-icon-size-2);
+    height: var(--add-icon-size-2);
+    right: var(--normal);
+    bottom: var(--normal);
+  }
+
+  .add-icon .mdi {
+    font-size: var(--add-icon-size-2);
+  }
 }
