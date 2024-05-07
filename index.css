@@ -45,10 +45,13 @@ h3 {
 }
 
 input,
-button {
+button,
+textarea,
+select {
   font: inherit;
-  padding: var(--x-small) var(--small);
+  padding: var(--x-small);
   border-radius: var(--x-small);
+  border: none;
 }
 
 /* Style body element */
@@ -136,6 +139,80 @@ main {
 
 .add-icon .mdi {
   font-size: var(--add-icon-size-1);
+}
+
+dialog {
+  margin: auto;
+  border: none;
+  outline: none;
+  padding: var(--normal);
+  background-color: var(--neutral-color);
+  border-radius: var(--small);
+  box-shadow: var(--shadow-style-1);
+}
+
+dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--normal);
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--small);
+}
+
+button {
+  color: var(--white-color);
+  padding: var(--small);
+  transition: transform 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+button[type="button"] {
+  background-color: var(--light-black);
+}
+
+button[type="submit"] {
+  background-color: var(--blue-color);
+}
+
+dialog[open] {
+  animation: fade-in 0.5s ease-in forwards;
+}
+
+dialog[open]::backdrop {
+  animation: backdrop-fade-in 0.5s ease-in forwards;
+}
+
+/* Animation keyframes */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+@keyframes backdrop-fade-in {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    background-color: var(--light-black);
+  }
 }
 
 @media screen and (max-width: 425px) {

@@ -1,6 +1,6 @@
 class Store {
   static getProjects() {
-    return localStorage.getItem("projects") === null
+    return localStorage.getItem("projects")
       ? []
       : JSON.parse(localStorage.getItem("projects"));
   }
