@@ -1,8 +1,8 @@
 class Store {
   static getProjects() {
     return localStorage.getItem("projects")
-      ? []
-      : JSON.parse(localStorage.getItem("projects"));
+      ? JSON.parse(localStorage.getItem("projects"))
+      : [];
   }
 
   static getProject(projectName) {
@@ -16,6 +16,17 @@ class Store {
       return;
     }
     projects.push(project);
+    localStorage.setItem("projects", JSON.stringify(projects));
+  }
+
+  static addTodoToProject(todo, projectName, index = undefined) {
+    const projects = Store.getProjects();
+    const project = projects.find((proj) => proj.name === projectName);
+    if (index) {
+      project.todos.splice(index, 0, todo);
+    } else {
+      project.todos.push(todo);
+    }
     localStorage.setItem("projects", JSON.stringify(projects));
   }
 }
