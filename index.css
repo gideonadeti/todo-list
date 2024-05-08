@@ -5,6 +5,9 @@
 :root {
   /* Colors */
   --blue-color: #3b82f6;
+  --red-color: #ef4444;
+  --yellow-color: #eab308;
+  --green-color: #22c55e;
   --white-color: #fff;
   --neutral-color: #d4d4d4;
   --light-black: #0000005e;
@@ -20,6 +23,7 @@
   /* Others */
   --shadow-style-1: 1px 2px 3px var(--light-black);
   --shadow-style-2: 0 0 var(--small) var(--light-black);
+  --shadow-style-3: -1px -1px 1px var(--light-black);
 
   --add-icon-size-1: 56px;
   --add-icon-size-2: 50px;
@@ -28,6 +32,7 @@
 /* Apply general styling and reset */
 html {
   box-sizing: border-box;
+  position: relative;
 }
 
 *,
@@ -111,7 +116,90 @@ nav div:active {
 
 /* Style main section of app */
 main {
-  height: 100vh;
+  min-height: 100vh;
+  padding: var(--x-small) var(--normal);
+}
+
+.content {
+  margin-top: var(--big);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--normal);
+  margin-bottom: calc(var(--x-big) + var(--normal));
+}
+
+.todo {
+  background-color: var(--white-color);
+  border-radius: var(--small);
+  padding: var(--small);
+  box-shadow: var(--shadow-style-1);
+  border-left: var(--small) solid var(--blue-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--x-small);
+  transition: transform 0.3s;
+}
+
+.todo:hover {
+  transform: translateY(var(--x-small));
+}
+
+
+.todo .title {
+  align-self: center;
+}
+
+.priority-and-parent-project-name, .controls, .controls div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.priority {
+  font-weight: 900;
+  text-shadow: var(--shadow-style-3);
+}
+
+.priority.high {
+  color: var(--red-color);
+}
+
+.priority.medium {
+  color: var(--yellow-color);
+}
+
+.priority.low {
+  color: var(--green-color);
+}
+
+.parent-project-name {
+  font-weight: 900;
+  font-style: italic;
+}
+
+input[type="checkbox"] {
+  width: calc(var(--big) - var(--small));
+  height: calc(var(--big) - var(--small));
+}
+
+.controls div {
+  gap: var(--small);
+}
+
+.todo .mdi {
+  padding: var(--x-small);
+  border-radius: var(--x-small);
+  font-size: calc(var(--big) - var(--small));
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.todo .mdi:hover {
+  background-color: var(--light-black);
+}
+
+.todo .mdi:active {
+  transform: scale(0.9);
 }
 
 .add-icon {
@@ -149,6 +237,7 @@ dialog {
   background-color: var(--neutral-color);
   border-radius: var(--small);
   box-shadow: var(--shadow-style-1);
+  width: max(300px, 30%);
 }
 
 dialog form {

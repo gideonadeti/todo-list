@@ -15,15 +15,17 @@ class UI {
 
     project.todos.forEach((todo) => {
       const todoDiv = document.createElement("div");
+      todoDiv.classList.add("todo");
 
       const todoTitle = document.createElement("h2");
+      todoTitle.classList.add("title");
       todoTitle.textContent =
         todo.title.length > 10 ? todo.title.slice(0, 10) + "..." : todo.title;
 
       const todoDescription = document.createElement("p");
       todoDescription.textContent =
-        todo.description.length > 20
-          ? todo.description.slice(0, 20) + "..."
+        todo.description.length > 30
+          ? todo.description.slice(0, 30) + "..."
           : todo.description;
 
       const todoDueDate = document.createElement("p");
@@ -32,19 +34,24 @@ class UI {
       todoDueDate.textContent = formattedDueDate;
 
       const priorityAndParentProjectNameDiv = document.createElement("div");
+      priorityAndParentProjectNameDiv.classList.add("priority-and-parent-project-name");
 
       const todoPriority = document.createElement("p");
+      todoPriority.classList.add("priority", todo.priority);
       todoPriority.textContent = todo.priority.toUpperCase();
       priorityAndParentProjectNameDiv.appendChild(todoPriority);
 
       const todoParentProjectName = document.createElement("p");
+      todoParentProjectName.classList.add("parent-project-name");
       todoParentProjectName.textContent = todo.parentProjectName;
       priorityAndParentProjectNameDiv.appendChild(todoParentProjectName);
 
       const controlsDiv = document.createElement("div");
+      controlsDiv.classList.add("controls");
 
       const todoStatus = document.createElement("input");
       todoStatus.type = "checkbox";
+      todoStatus.classList.add("switch");
       todoStatus.checked = todo.completed;
       controlsDiv.appendChild(todoStatus);
 
@@ -56,7 +63,7 @@ class UI {
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(editOrViewTodoIcon);
 
       const deleteTodoIcon = document.createElement("span");
-      deleteTodoIcon.classList.add("mdi", "mdi-delete-outline", "delete-icon");
+      deleteTodoIcon.classList.add("mdi", "mdi-delete-outline");
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(deleteTodoIcon);
 
       controlsDiv.appendChild(editOrViewTodoIconAndDeleteTodoIconDiv);
