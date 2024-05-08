@@ -29,6 +29,13 @@ class Store {
     }
     localStorage.setItem("projects", JSON.stringify(projects));
   }
+
+  static removeTodoFromProject(index, projectName) {
+    const projects = Store.getProjects();
+    const project = projects.find((proj) => proj.name === projectName);
+    project.todos.splice(index, 1);
+    localStorage.setItem("projects", JSON.stringify(projects));
+  }
 }
 
 export { Store };

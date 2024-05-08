@@ -1,4 +1,5 @@
 import { format, parseISO } from "date-fns";
+import { Store } from "./store.js";
 
 class UI {
   static displayTodos(project) {
@@ -13,7 +14,7 @@ class UI {
     heading.textContent = project.name;
     headingDiv.appendChild(heading);
 
-    project.todos.forEach((todo) => {
+    project.todos.forEach((todo, index) => {
       const todoDiv = document.createElement("div");
       todoDiv.classList.add("todo");
 
@@ -34,7 +35,9 @@ class UI {
       todoDueDate.textContent = formattedDueDate;
 
       const priorityAndParentProjectNameDiv = document.createElement("div");
-      priorityAndParentProjectNameDiv.classList.add("priority-and-parent-project-name");
+      priorityAndParentProjectNameDiv.classList.add(
+        "priority-and-parent-project-name"
+      );
 
       const todoPriority = document.createElement("p");
       todoPriority.classList.add("priority", todo.priority);
@@ -65,6 +68,13 @@ class UI {
       const deleteTodoIcon = document.createElement("span");
       deleteTodoIcon.classList.add("mdi", "mdi-delete-outline");
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(deleteTodoIcon);
+
+      deleteTodoIcon.addEventListener("click", () => {
+        Store.removeTodoFromProject(index, "My Todos");
+        Store.removeTodoFromProject(index, todo.parentProjectName);
+        const updatedProject = Store.getProject(project.name);
+        this.displayTodos(updatedProject);
+      });
 
       controlsDiv.appendChild(editOrViewTodoIconAndDeleteTodoIconDiv);
 
