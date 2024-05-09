@@ -1,5 +1,5 @@
 class Todo {
-  constructor(
+  constructor (
     title,
     description,
     dueDate,
@@ -7,17 +7,17 @@ class Todo {
     parentProjectName,
     completed = false
   ) {
-    this.title = title;
-    this.description = description;
-    this.dueDate = dueDate;
-    this.priority = priority;
-    this.parentProjectName = parentProjectName;
-    this.completed = completed;
+    this.title = title
+    this.description = description
+    this.dueDate = dueDate
+    this.priority = priority
+    this.parentProjectName = parentProjectName
+    this.completed = completed
   }
 
-  toggleCompleted() {
-    this.completed = !this.completed;
+  toggleCompleted () {
+    this.completed = !this.completed
   }
 }
 
-export { Todo };
+export { Todo }

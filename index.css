@@ -138,19 +138,21 @@ main {
   flex-direction: column;
   justify-content: space-between;
   gap: var(--x-small);
-  transition: transform 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.todo:hover {
-  transform: translateY(var(--x-small));
+.todo.completed {
+  background-color: var(--neutral-color);
+  box-shadow: var(--shadow-style-2);
 }
-
 
 .todo .title {
   align-self: center;
 }
 
-.priority-and-parent-project-name, .controls, .controls div {
+.priority-and-parent-project-name,
+.controls,
+.controls div {
   display: flex;
   align-items: center;
   justify-content: space-between;
