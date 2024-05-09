@@ -75,6 +75,10 @@ class UI {
       editOrViewTodoIcon.classList.add('mdi', 'mdi-pencil-outline')
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(editOrViewTodoIcon)
 
+      editOrViewTodoIcon.addEventListener('click', () => {
+        return
+      })
+
       const deleteTodoIcon = document.createElement('span')
       deleteTodoIcon.classList.add('mdi', 'mdi-delete-outline')
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(deleteTodoIcon)

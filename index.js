@@ -4,22 +4,9 @@ import { Store } from './modules/store.js'
 import { UI } from './modules/ui.js'
 import { Project } from './modules/project.js'
 import { Todo } from './modules/todo.js'
+import { DOMManipulation } from './modules/domm.js'
 
-const navDivs = document.querySelectorAll('nav div')
-const addIcon = document.querySelector('.add-icon')
-const addTodoDialog = document.querySelector('.add-todo-dialog')
-const addTodoForm = addTodoDialog.querySelector('.add-todo-form')
-
-const closeAddTodoDialog = addTodoDialog.querySelector("button[type='button']")
-
-navDivs.forEach((div) => {
-  div.addEventListener('click', () => {
-    navDivs.forEach((div) => {
-      div.classList.remove('focus')
-    })
-    div.classList.add('focus')
-  })
-})
+const newDOMManipulation = new DOMManipulation()
 
 let myTodos = Store.getProject('My Todos')
 if (myTodos) {
@@ -36,32 +23,11 @@ if (!inbox) {
   Store.addProject(inbox)
 }
 
-function clearAddTodoFormValues () {
-  addTodoForm.querySelector('#title').value = ''
-  addTodoForm.querySelector('#description').value = ''
-  addTodoForm.querySelector('#due-date').value = ''
-  addTodoForm.querySelector('#priority').value = 'medium'
-  addTodoForm.querySelector('#parent-project-name').value = 'Inbox'
-}
-
-addIcon.addEventListener('click', () => {
-  addTodoDialog.showModal()
-})
-
-closeAddTodoDialog.addEventListener('click', () => {
-  addTodoDialog.close()
-})
-
-addTodoDialog.addEventListener('submit', (event) => {
+newDOMManipulation.addTodoForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
-  const title = addTodoForm.querySelector('#title').value
-  const description = addTodoForm.querySelector('#description').value
-  const dueDate = addTodoForm.querySelector('#due-date').value
-  const priority = addTodoForm.querySelector('#priority').value
-  const parentProjectName = addTodoForm.querySelector(
-    '#parent-project-name'
-  ).value
+  const { title, description, dueDate, priority, parentProjectName } =
+    newDOMManipulation.getAddTodoFormValues()
 
   const todo = new Todo(
     title,
@@ -76,6 +42,6 @@ addTodoDialog.addEventListener('submit', (event) => {
   const myTodos = Store.getProject('My Todos')
   UI.displayTodos(myTodos)
 
-  clearAddTodoFormValues()
-  addTodoDialog.close()
+  newDOMManipulation.clearAddTodoFormValues()
+  newDOMManipulation.closeAddTodoDialog()
 })

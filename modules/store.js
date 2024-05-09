@@ -1,3 +1,7 @@
+import { DOMManipulation } from './domm'
+
+const newDOMManipulation = new DOMManipulation()
+
 class Store {
   static getProjects () {
     return localStorage.getItem('projects')
@@ -43,6 +47,9 @@ class Store {
     const todo = project.todos[index]
     todo.completed = !todo.completed
     localStorage.setItem('projects', JSON.stringify(projects))
+  }
+
+  static modifyTodo (index, projectName) {
   }
 }
 
