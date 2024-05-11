@@ -8,7 +8,7 @@ import { DOMManipulation } from './modules/domm.js'
 
 const newDOMManipulation = new DOMManipulation()
 
-let myTodos = Store.getProject('My Todos')
+let myTodos = Store.getProject(0)
 if (myTodos) {
   UI.displayTodos(myTodos)
 } else {
@@ -26,7 +26,7 @@ if (!inbox) {
 newDOMManipulation.addTodoForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
-  const { title, description, dueDate, priority, parentProjectName } =
+  const { title, description, dueDate, priority, parentProjectId } =
     newDOMManipulation.getAddTodoFormValues()
 
   const todo = new Todo(
@@ -34,12 +34,14 @@ newDOMManipulation.addTodoForm.addEventListener('submit', (event) => {
     description,
     dueDate,
     priority,
-    parentProjectName
+    parentProjectId
   )
-  Store.addTodoToProject(todo, 'My Todos')
-  Store.addTodoToProject(todo, parentProjectName)
 
-  const myTodos = Store.getProject('My Todos')
+  Store.addTodoToProject(todo, parentProjectId)
+
+  // TODO: Implement a functionality for getting the current project-name so that that is updated
+
+  const myTodos = Store.getProject(0)
   UI.displayTodos(myTodos)
 
   newDOMManipulation.clearAddTodoFormValues()

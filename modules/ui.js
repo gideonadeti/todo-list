@@ -11,10 +11,11 @@ class UI {
     contentDiv.innerHTML = ''
 
     const heading = document.createElement('h1')
+    heading.classList.add('project-name')
     heading.textContent = project.name
     headingDiv.appendChild(heading)
 
-    project.todos.forEach((todo, index) => {
+    project.todos.forEach((todo) => {
       const todoDiv = document.createElement('div')
       todoDiv.classList.add('todo')
 
@@ -62,8 +63,8 @@ class UI {
       controlsDiv.appendChild(todoStatus)
 
       todoStatus.addEventListener('change', () => {
-        Store.modifyTodoStatus(index, 'My Todos')
-        Store.modifyTodoStatus(index, todo.parentProjectName)
+        Store.modifyTodoStatus(todo.id, todo.parentProjectId)
+
         const updatedProject = Store.getProject(project.name)
         this.displayTodos(updatedProject)
       })
@@ -75,17 +76,13 @@ class UI {
       editOrViewTodoIcon.classList.add('mdi', 'mdi-pencil-outline')
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(editOrViewTodoIcon)
 
-      editOrViewTodoIcon.addEventListener('click', () => {
-        return
-      })
-
       const deleteTodoIcon = document.createElement('span')
       deleteTodoIcon.classList.add('mdi', 'mdi-delete-outline')
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(deleteTodoIcon)
 
       deleteTodoIcon.addEventListener('click', () => {
-        Store.removeTodoFromProject(index, 'My Todos')
-        Store.removeTodoFromProject(index, todo.parentProjectName)
+        Store.removeTodoFromProject(todo.id, todo.parentProjectId)
+
         const updatedProject = Store.getProject(project.name)
         this.displayTodos(updatedProject)
       })

@@ -1,7 +1,3 @@
-import { DOMManipulation } from './domm'
-
-const newDOMManipulation = new DOMManipulation()
-
 class Store {
   static getProjects () {
     return localStorage.getItem('projects')
@@ -9,47 +5,56 @@ class Store {
       : []
   }
 
-  static getProject (projectName) {
+  static getProject (projectId) {
     const projects = this.getProjects()
-    return projects.find((proj) => proj.name === projectName)
+    return projects.find((proj) => proj.id === projectId)
+  }
+
+  static getProjectName (projectId) {
+    return this.getProjects().find((proj) => proj.id === projectId).name
   }
 
   static addProject (project) {
     const projects = this.getProjects()
-    if (projects.some((proj) => proj.name === project.name)) {
+    if (projects.some((proj) => proj.id === project.id)) {
       return
     }
     projects.push(project)
     localStorage.setItem('projects', JSON.stringify(projects))
   }
 
-  static addTodoToProject (todo, projectName, index = undefined) {
+  static addTodoToProject (todo, parentProjectId) {
     const projects = Store.getProjects()
-    const project = projects.find((proj) => proj.name === projectName)
-    if (index) {
-      project.todos.splice(index, 0, todo)
-    } else {
-      project.todos.push(todo)
-    }
+
+    const parentProject = projects.find((project) => project.id === parentProjectId)
+    parentProject.todos.push(todo)
+
+    const myTodos = projects.find((project) => project.id === 0)
+    myTodos.todos.push(todo)
+
     localStorage.setItem('projects', JSON.stringify(projects))
   }
 
-  static removeTodoFromProject (index, projectName) {
+  static removeTodoFromProject (todoId, parentProjectId) {
     const projects = Store.getProjects()
-    const project = projects.find((proj) => proj.name === projectName)
-    project.todos.splice(index, 1)
+    const parentProject = projects.find((project) => project.id === parentProjectId)
+    parentProject.todos = parentProject.todos.filter((todo) => todo.id !== todoId)
     localStorage.setItem('projects', JSON.stringify(projects))
   }
 
-  static modifyTodoStatus (index, projectName) {
+  static modifyTodoStatus (todoId, parentProjectId) {
     const projects = Store.getProjects()
-    const project = projects.find((proj) => proj.name === projectName)
-    const todo = project.todos[index]
+    const parentProject = projects.find(
+      (project) => project.id === parentProjectId
+    )
+    const todo = parentProject.todos.find((todo) => todo.id === todoId)
     todo.completed = !todo.completed
-    localStorage.setItem('projects', JSON.stringify(projects))
-  }
 
-  static modifyTodo (index, projectName) {
+    const myTodos = projects.find((project) => project.id === 0)
+    const myTodo = myTodos.todos.find((todo) => todo.id === todoId)
+    myTodo.completed = !todo.completed
+
+    localStorage.setItem('projects', JSON.stringify(projects))
   }
 }
 

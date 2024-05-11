@@ -73,7 +73,7 @@ class DOMManipulation {
     const description = this.addTodoForm.querySelector('#description').value
     const dueDate = this.addTodoForm.querySelector('#due-date').value
     const priority = this.addTodoForm.querySelector('#priority').value
-    const parentProjectName = this.addTodoForm.querySelector(
+    const parentProjectId = +this.addTodoForm.querySelector(
       '#parent-project-name'
     ).value
 
@@ -82,7 +82,7 @@ class DOMManipulation {
       description,
       dueDate,
       priority,
-      parentProjectName
+      parentProjectId
     }
   }
 
