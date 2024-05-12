@@ -14,12 +14,13 @@ class DOMManipulation {
       "button[type='button']"
     )
 
+    this.setupEventListeners()
+  }
+
+  setupEventListeners () {
     this.navDivs.forEach((div) => {
       div.addEventListener('click', () => {
-        this.navDivs.forEach((div) => {
-          div.classList.remove('focus')
-        })
-        div.classList.add('focus')
+        this.handleNavClick(div)
       })
     })
 
@@ -34,6 +35,13 @@ class DOMManipulation {
     this.closeUpdateTodoDialogButton.addEventListener('click', () => {
       this.closeUpdateTodoDialog()
     })
+  }
+
+  handleNavClick (div) {
+    this.navDivs.forEach((navDiv) => {
+      navDiv.classList.remove('focus')
+    })
+    div.classList.add('focus')
   }
 
   openAddTodoDialog () {
@@ -69,38 +77,25 @@ class DOMManipulation {
   }
 
   getAddTodoFormValues () {
-    const title = this.addTodoForm.querySelector('#title').value
-    const description = this.addTodoForm.querySelector('#description').value
-    const dueDate = this.addTodoForm.querySelector('#due-date').value
-    const priority = this.addTodoForm.querySelector('#priority').value
-    const parentProjectId = +this.addTodoForm.querySelector(
-      '#parent-project-name'
-    ).value
-
     return {
-      title,
-      description,
-      dueDate,
-      priority,
-      parentProjectId
+      title: this.addTodoForm.querySelector('#title').value,
+      description: this.addTodoForm.querySelector('#description').value,
+      dueDate: this.addTodoForm.querySelector('#due-date').value,
+      priority: this.addTodoForm.querySelector('#priority').value,
+      parentProjectId: +this.addTodoForm.querySelector('#parent-project-name')
+        .value
     }
   }
 
   getUpdateTodoFormValues () {
-    const title = this.updateTodoForm.querySelector('#title').value
-    const description = this.updateTodoForm.querySelector('#description').value
-    const dueDate = this.updateTodoForm.querySelector('#due-date').value
-    const priority = this.updateTodoForm.querySelector('#priority').value
-    const parentProjectName = this.updateTodoForm.querySelector(
-      '#parent-project-name'
-    ).value
-
     return {
-      title,
-      description,
-      dueDate,
-      priority,
-      parentProjectName
+      title: this.updateTodoForm.querySelector('#title').value,
+      description: this.updateTodoForm.querySelector('#description').value,
+      dueDate: this.updateTodoForm.querySelector('#due-date').value,
+      priority: this.updateTodoForm.querySelector('#priority').value,
+      parentProjectId: +this.updateTodoForm.querySelector(
+        '#parent-project-name'
+      ).value
     }
   }
 
@@ -110,7 +105,7 @@ class DOMManipulation {
     this.updateTodoForm.querySelector('#due-date').value = todo.dueDate
     this.updateTodoForm.querySelector('#priority').value = todo.priority
     this.updateTodoForm.querySelector('#parent-project-name').value =
-      todo.parentProjectName
+      todo.parentProjectId.toString()
   }
 }
 
