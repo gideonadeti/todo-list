@@ -99,6 +99,10 @@ class DOMManipulation {
     }
   }
 
+  getCurrentProjectName () {
+    return this.currentProjectName
+  }
+
   populateUpdateTodoFormValues (todo) {
     this.updateTodoForm.querySelector('#title').value = todo.title
     this.updateTodoForm.querySelector('#description').value = todo.description

@@ -39,10 +39,11 @@ newDOMManipulation.addTodoForm.addEventListener('submit', (event) => {
 
   Store.addTodoToProject(todo, parentProjectId)
 
-  // TODO: Implement a functionality for getting the current project-name so that that is updated
+  const currentProjectName = document.querySelector('.project-name').textContent
+  const currentProjectId = Store.getProjectId(currentProjectName)
 
-  const myTodos = Store.getProject(0)
-  UI.displayTodos(myTodos)
+  const currentProject = Store.getProject(currentProjectId)
+  UI.displayTodos(currentProject)
 
   newDOMManipulation.clearAddTodoFormValues()
   newDOMManipulation.closeAddTodoDialog()
