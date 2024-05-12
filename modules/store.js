@@ -71,7 +71,7 @@ class Store {
 
     const myTodos = projects.find((project) => project.id === 0)
     const myTodo = myTodos.todos.find((todo) => todo.id === todoId)
-    myTodo.completed = !todo.completed
+    myTodo.completed = !myTodo.completed
 
     localStorage.setItem('projects', JSON.stringify(projects))
   }
