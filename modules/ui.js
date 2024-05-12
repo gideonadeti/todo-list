@@ -83,7 +83,7 @@ class UI {
       deleteTodoIcon.addEventListener('click', () => {
         Store.removeTodoFromProject(todo.id, todo.parentProjectId)
 
-        const updatedProject = Store.getProject(project.name)
+        const updatedProject = Store.getProject(project.id)
         this.displayTodos(updatedProject)
       })
 

@@ -57,7 +57,7 @@ class DOMManipulation {
     this.addTodoForm.querySelector('#description').value = ''
     this.addTodoForm.querySelector('#due-date').value = ''
     this.addTodoForm.querySelector('#priority').value = 'medium'
-    this.addTodoForm.querySelector('#parent-project-name').value = 'Inbox'
+    this.addTodoForm.querySelector('#parent-project-name').value = '1'
   }
 
   clearUpdateTodoFormValues () {

@@ -26,7 +26,9 @@ class Store {
   static addTodoToProject (todo, parentProjectId) {
     const projects = Store.getProjects()
 
-    const parentProject = projects.find((project) => project.id === parentProjectId)
+    const parentProject = projects.find(
+      (project) => project.id === parentProjectId
+    )
     parentProject.todos.push(todo)
 
     const myTodos = projects.find((project) => project.id === 0)
@@ -37,8 +39,16 @@ class Store {
 
   static removeTodoFromProject (todoId, parentProjectId) {
     const projects = Store.getProjects()
-    const parentProject = projects.find((project) => project.id === parentProjectId)
-    parentProject.todos = parentProject.todos.filter((todo) => todo.id !== todoId)
+    const parentProject = projects.find(
+      (project) => project.id === parentProjectId
+    )
+    parentProject.todos = parentProject.todos.filter(
+      (todo) => todo.id !== todoId
+    )
+
+    const myTodos = projects.find((project) => project.id === 0)
+    myTodos.todos = myTodos.todos.filter((todo) => todo.id !== todoId)
+
     localStorage.setItem('projects', JSON.stringify(projects))
   }
 
