@@ -128,7 +128,7 @@ main {
   margin-bottom: calc(var(--x-big) + var(--normal));
 }
 
-.todo {
+.todo, .project {
   background-color: var(--white-color);
   border-radius: var(--small);
   padding: var(--small);
@@ -146,7 +146,7 @@ main {
   box-shadow: var(--shadow-style-2);
 }
 
-.todo .title {
+.todo .title, .project .name {
   align-self: center;
 }
 
@@ -158,12 +158,16 @@ main {
   justify-content: space-between;
 }
 
-.priority {
+.priority, .incomplete-todos, .completed-todos {
   font-weight: 900;
   text-shadow: var(--shadow-style-3);
 }
 
-.priority.high {
+.incomplete-todos, .completed-todos {
+  text-shadow: var(--shadow-style-2);
+}
+
+.priority.high, .incomplete-todos {
   color: var(--red-color);
 }
 
@@ -171,11 +175,11 @@ main {
   color: var(--yellow-color);
 }
 
-.priority.low {
+.priority.low, .completed-todos {
   color: var(--green-color);
 }
 
-.parent-project-name {
+.parent-project-name, .todos {
   font-weight: 900;
   font-style: italic;
 }

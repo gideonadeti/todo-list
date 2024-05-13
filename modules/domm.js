@@ -1,3 +1,6 @@
+import { Store } from './store'
+import { UI } from './ui'
+
 class DOMManipulation {
   constructor () {
     this.navDivs = document.querySelectorAll('nav div')
@@ -13,6 +16,9 @@ class DOMManipulation {
     this.closeUpdateTodoDialogButton = this.updateTodoForm.querySelector(
       "button[type='button']"
     )
+
+    this.myTodosDiv = document.querySelector('.my-todos')
+    this.myProjectsDiv = document.querySelector('.my-projects')
 
     this.setupEventListeners()
   }
@@ -35,6 +41,10 @@ class DOMManipulation {
     this.closeUpdateTodoDialogButton.addEventListener('click', () => {
       this.closeUpdateTodoDialog()
     })
+
+    this.myTodosDiv.addEventListener('click', this.handleMyTodosDivClick)
+
+    this.myProjectsDiv.addEventListener('click', this.handleMyProjectsDivClick)
   }
 
   handleNavClick (div) {
@@ -42,6 +52,15 @@ class DOMManipulation {
       navDiv.classList.remove('focus')
     })
     div.classList.add('focus')
+  }
+
+  handleMyTodosDivClick () {
+    const myTodos = Store.getProject(0)
+    UI.displayTodos(myTodos)
+  }
+
+  handleMyProjectsDivClick () {
+    UI.displayProjects()
   }
 
   openAddTodoDialog () {
