@@ -6,14 +6,18 @@ class DOMManipulation {
     this.navDivs = document.querySelectorAll('nav div')
     this.addIcon = document.querySelector('.add-icon')
     this.addTodoDialog = document.querySelector('.add-todo-dialog')
+    this.addProjectDialog = document.querySelector('.add-project-dialog')
     this.addTodoForm = this.addTodoDialog.querySelector('.add-todo-form')
-    this.closeAddTodoDialogButton = this.addTodoForm.querySelector(
+    this.addProjectForm = this.addProjectDialog.querySelector('.add-project-form')
+    this.cancelAddTodoDialogButton = this.addTodoForm.querySelector(
       "button[type='button']"
     )
+    this.cancelAddProjectDialogButton = this.addProjectForm.querySelector('button[type="button"]')
+
     this.updateTodoDialog = document.querySelector('.update-todo-dialog')
     this.updateTodoForm =
       this.updateTodoDialog.querySelector('.update-todo-form')
-    this.closeUpdateTodoDialogButton = this.updateTodoForm.querySelector(
+    this.cancelUpdateTodoDialogButton = this.updateTodoForm.querySelector(
       "button[type='button']"
     )
 
@@ -30,15 +34,17 @@ class DOMManipulation {
       })
     })
 
-    this.addIcon.addEventListener('click', () => {
-      this.openAddTodoDialog()
-    })
+    this.addIcon.addEventListener('click', this.handleAddIconClick)
 
-    this.closeAddTodoDialogButton.addEventListener('click', () => {
+    this.cancelAddTodoDialogButton.addEventListener('click', () => {
       this.closeAddTodoDialog()
     })
 
-    this.closeUpdateTodoDialogButton.addEventListener('click', () => {
+    this.cancelAddProjectDialogButton.addEventListener('click', () => {
+      this.closeAddProjectDialog()
+    })
+
+    this.cancelUpdateTodoDialogButton.addEventListener('click', () => {
       this.closeUpdateTodoDialog()
     })
 
@@ -63,8 +69,12 @@ class DOMManipulation {
     UI.displayProjects()
   }
 
-  openAddTodoDialog () {
-    this.addTodoDialog.showModal()
+  handleAddIconClick () {
+    if (!document.querySelector('.project-name')) {
+      document.querySelector('.add-project-dialog').showModal()
+    } else {
+      document.querySelector('.add-todo-dialog').showModal()
+    }
   }
 
   openUpdateTodoDialog () {
@@ -73,6 +83,10 @@ class DOMManipulation {
 
   closeAddTodoDialog () {
     this.addTodoDialog.close()
+  }
+
+  closeAddProjectDialog () {
+    this.addProjectDialog.close()
   }
 
   closeUpdateTodoDialog () {
@@ -116,10 +130,6 @@ class DOMManipulation {
         '#parent-project-name'
       ).value
     }
-  }
-
-  getCurrentProjectName () {
-    return this.currentProjectName
   }
 
   populateUpdateTodoFormValues (todo) {
