@@ -152,30 +152,31 @@ class UI {
       controlsDiv.classList.add('controls')
 
       const viewDiv = document.createElement('div')
-      viewDiv.classList.add("mdi", "mdi-eye-outline")
+      viewDiv.classList.add('mdi', 'mdi-eye-outline')
       controlsDiv.appendChild(viewDiv)
 
       viewDiv.addEventListener('click', () => {
         this.displayTodos(project)
       })
 
-      const editOrViewProjectIconAndDeleteProjectIconDiv =
+      const editAndDeleteProjectIconsDiv =
         document.createElement('div')
 
-      const editOrViewProjectIcon = document.createElement('span')
-      editOrViewProjectIcon.classList.add('mdi', 'mdi-pencil-outline')
-      editOrViewProjectIconAndDeleteProjectIconDiv.appendChild(
-        editOrViewProjectIcon
+      const editProjectIcon = document.createElement('span')
+      editProjectIcon.classList.add('mdi', 'mdi-pencil-outline')
+      editAndDeleteProjectIconsDiv.appendChild(
+        editProjectIcon
       )
 
-      editOrViewProjectIcon.addEventListener('click', () => {
+      editProjectIcon.addEventListener('click', () => {
         // Store.modifyTodo(todo.id, todo.parentProjectId, project.id);
-        console.log('Project modified!!!')
+        // console.log('Project modified!!!')
+        Store.modifyProject(project.id)
       })
 
       const deleteProjectIcon = document.createElement('span')
       deleteProjectIcon.classList.add('mdi', 'mdi-delete-outline')
-      editOrViewProjectIconAndDeleteProjectIconDiv.appendChild(
+      editAndDeleteProjectIconsDiv.appendChild(
         deleteProjectIcon
       )
 
@@ -187,7 +188,7 @@ class UI {
         // this.displayTodos(updatedProject);
       })
 
-      controlsDiv.appendChild(editOrViewProjectIconAndDeleteProjectIconDiv)
+      controlsDiv.appendChild(editAndDeleteProjectIconsDiv)
 
       projectDiv.appendChild(projectName)
       projectDiv.appendChild(numOfTodosP)

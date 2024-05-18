@@ -15,11 +15,14 @@ class DOMManipulation {
     this.cancelAddProjectDialogButton = this.addProjectForm.querySelector('button[type="button"]')
 
     this.updateTodoDialog = document.querySelector('.update-todo-dialog')
+    this.updateProjectDialog = document.querySelector('.update-project-dialog')
     this.updateTodoForm =
       this.updateTodoDialog.querySelector('.update-todo-form')
+    this.updateProjectForm = this.updateProjectDialog.querySelector('.update-project-form')
     this.cancelUpdateTodoDialogButton = this.updateTodoForm.querySelector(
       "button[type='button']"
     )
+    this.cancelUpdateProjectDialogButton = this.updateProjectForm.querySelector('button[type="button"]')
 
     this.myTodosDiv = document.querySelector('.my-todos')
     this.myProjectsDiv = document.querySelector('.my-projects')
@@ -81,6 +84,10 @@ class DOMManipulation {
     this.updateTodoDialog.showModal()
   }
 
+  openUpdateProjectDialog () {
+    this.updateProjectDialog.showModal()
+  }
+
   closeAddTodoDialog () {
     this.addTodoDialog.close()
   }
@@ -91,6 +98,10 @@ class DOMManipulation {
 
   closeUpdateTodoDialog () {
     this.updateTodoDialog.close()
+  }
+
+  closeUpdateProjectDialog () {
+    this.updateProjectDialog.close()
   }
 
   clearAddTodoFormValues () {
@@ -140,6 +151,10 @@ class DOMManipulation {
     }
   }
 
+  getUpdateProjectFormValues () {
+    return this.updateProjectForm.querySelector('#project-name').value
+  }
+
   populateUpdateTodoFormValues (todo) {
     this.updateTodoForm.querySelector('#title').value = todo.title
     this.updateTodoForm.querySelector('#description').value = todo.description
@@ -147,6 +162,10 @@ class DOMManipulation {
     this.updateTodoForm.querySelector('#priority').value = todo.priority
     this.updateTodoForm.querySelector('#parent-project-name').value =
       todo.parentProjectId.toString()
+  }
+
+  populateUpdateProjectFormValues (project) {
+    this.updateProjectForm.querySelector('#project-name').value = project.name
   }
 }
 

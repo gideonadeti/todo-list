@@ -20,7 +20,8 @@ class Store {
   }
 
   static getProjectId (projectName) {
-    return this.getProjects().find((project) => project.name === projectName).id
+    return this.getProjects().find((project) => project.name === projectName)
+      .id
   }
 
   static addProject (project) {
@@ -114,6 +115,31 @@ class Store {
     domManipulation.updateTodoForm.addEventListener(
       'submit',
       updateTodoHandler
+    )
+  }
+
+  static modifyProject (projectId) {
+    const projects = this.getProjects()
+
+    const project = projects.find((project) => project.id === projectId)
+
+    const updateProjectHandler = (event) => {
+      event.preventDefault()
+
+      const updatedName = domManipulation.getUpdateProjectFormValues()
+
+      project.name = updatedName
+
+      localStorage.setItem('projects', JSON.stringify(projects))
+      UI.displayProjects()
+      domManipulation.closeUpdateProjectDialog()
+    }
+
+    domManipulation.populateUpdateProjectFormValues(project)
+    domManipulation.openUpdateProjectDialog()
+    domManipulation.updateProjectForm.addEventListener(
+      'submit',
+      updateProjectHandler
     )
   }
 }
