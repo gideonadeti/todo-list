@@ -156,10 +156,7 @@ class UI {
       controlsDiv.appendChild(viewDiv)
 
       viewDiv.addEventListener('click', () => {
-        // Store.modifyProjectStatus(.id, todo.parentProjectId);
-        console.log('Project viewed !!!')
-        // const updatedProject = Store.getProject(project.id);
-        // this.displayTodos(updatedProject);
+        this.displayTodos(project)
       })
 
       const editOrViewProjectIconAndDeleteProjectIconDiv =
