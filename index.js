@@ -1,50 +1,58 @@
-import './index.css'
+import "./index.css";
 
-import { Store } from './modules/store.js'
-import { UI } from './modules/ui.js'
-import { Project } from './modules/project.js'
-import { Todo } from './modules/todo.js'
-import { DOMManipulation } from './modules/domm.js'
+import { Store } from "./modules/store.js";
+import { UI } from "./modules/ui.js";
+import { Project } from "./modules/project.js";
+import { Todo } from "./modules/todo.js";
+import { DOMManipulation } from "./modules/domm.js";
 
-const newDOMManipulation = new DOMManipulation()
+const domManipulation = new DOMManipulation();
 
-let myTodos = Store.getProject(0)
+let myTodos = Store.getProject(0);
 if (myTodos) {
-  UI.displayTodos(myTodos)
+  UI.displayTodos(myTodos);
 } else {
-  myTodos = new Project('My Todos')
-  Store.addProject(myTodos)
-  UI.displayTodos(myTodos)
+  myTodos = new Project("My Todos");
+  Store.addProject(myTodos);
+  UI.displayTodos(myTodos);
 }
 
-let inbox = Store.getProject('Inbox')
+let inbox = Store.getProject(1);
 if (!inbox) {
-  inbox = new Project('Inbox')
-  Store.addProject(inbox)
+  inbox = new Project("Inbox");
+  Store.addProject(inbox);
 }
 
-newDOMManipulation.addTodoForm.addEventListener('submit', (event) => {
-  event.preventDefault()
+domManipulation.addTodoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
 
   const { title, description, dueDate, priority, parentProjectId } =
-    newDOMManipulation.getAddTodoFormValues()
+    domManipulation.getAddTodoFormValues();
 
-  const todo = new Todo(
-    title,
-    description,
-    dueDate,
-    priority,
-    parentProjectId
-  )
+  const todo = new Todo(title, description, dueDate, priority, parentProjectId);
 
-  Store.addTodoToProject(todo, parentProjectId)
+  Store.addTodoToProject(todo, parentProjectId);
 
-  const currentProjectName = document.querySelector('.project-name').textContent
-  const currentProjectId = Store.getProjectId(currentProjectName)
+  const currentProjectName =
+    document.querySelector(".project-name").textContent;
+  const currentProjectId = Store.getProjectId(currentProjectName);
 
-  const currentProject = Store.getProject(currentProjectId)
-  UI.displayTodos(currentProject)
+  const currentProject = Store.getProject(currentProjectId);
+  UI.displayTodos(currentProject);
 
-  newDOMManipulation.clearAddTodoFormValues()
-  newDOMManipulation.closeAddTodoDialog()
-})
+  domManipulation.clearAddTodoFormValues();
+  domManipulation.closeAddTodoDialog();
+});
+
+domManipulation.addProjectForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const projectName = domManipulation.getAddProjectFormValues();
+  const newProject = new Project(projectName);
+  Store.addProject(newProject);
+
+  UI.displayProjects();
+
+  domManipulation.clearAddProjectFormValues();
+  domManipulation.closeAddProjectDialog();
+});

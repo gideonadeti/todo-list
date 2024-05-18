@@ -101,6 +101,10 @@ class DOMManipulation {
     this.addTodoForm.querySelector('#parent-project-name').value = '1'
   }
 
+  clearAddProjectFormValues () {
+    this.addProjectForm.querySelector('#project-name').value = ''
+  }
+
   clearUpdateTodoFormValues () {
     this.updateTodoForm.querySelector('#title').value = ''
     this.updateTodoForm.querySelector('#description').value = ''
@@ -118,6 +122,10 @@ class DOMManipulation {
       parentProjectId: +this.addTodoForm.querySelector('#parent-project-name')
         .value
     }
+  }
+
+  getAddProjectFormValues () {
+    return this.addProjectForm.querySelector('#project-name').value
   }
 
   getUpdateTodoFormValues () {
