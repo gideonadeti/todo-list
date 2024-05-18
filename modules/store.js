@@ -142,6 +142,14 @@ class Store {
       updateProjectHandler
     )
   }
+
+  static removeProject (projectId) {
+    let projects = this.getProjects()
+
+    projects = projects.filter((project) => project.id !== projectId)
+
+    localStorage.setItem('projects', JSON.stringify(projects))
+  }
 }
 
 export { Store }

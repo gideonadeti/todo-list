@@ -159,33 +159,23 @@ class UI {
         this.displayTodos(project)
       })
 
-      const editAndDeleteProjectIconsDiv =
-        document.createElement('div')
+      const editAndDeleteProjectIconsDiv = document.createElement('div')
 
       const editProjectIcon = document.createElement('span')
       editProjectIcon.classList.add('mdi', 'mdi-pencil-outline')
-      editAndDeleteProjectIconsDiv.appendChild(
-        editProjectIcon
-      )
+      editAndDeleteProjectIconsDiv.appendChild(editProjectIcon)
 
       editProjectIcon.addEventListener('click', () => {
-        // Store.modifyTodo(todo.id, todo.parentProjectId, project.id);
-        // console.log('Project modified!!!')
         Store.modifyProject(project.id)
       })
 
       const deleteProjectIcon = document.createElement('span')
       deleteProjectIcon.classList.add('mdi', 'mdi-delete-outline')
-      editAndDeleteProjectIconsDiv.appendChild(
-        deleteProjectIcon
-      )
+      editAndDeleteProjectIconsDiv.appendChild(deleteProjectIcon)
 
       deleteProjectIcon.addEventListener('click', () => {
-        console.log('Project deleted!!!')
-        // Store.removeTodoFromProject(todo.id, todo.parentProjectId);
-
-        // const updatedProject = Store.getProject(project.id);
-        // this.displayTodos(updatedProject);
+        Store.removeProject(project.id)
+        this.displayProjects()
       })
 
       controlsDiv.appendChild(editAndDeleteProjectIconsDiv)
