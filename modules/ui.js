@@ -55,7 +55,6 @@ class UI {
 
       const todoStatus = document.createElement('input')
       todoStatus.type = 'checkbox'
-      todoStatus.classList.add('switch')
       todoStatus.checked = todo.completed
       if (todoStatus.checked) {
         todoDiv.classList.add('completed')
@@ -149,10 +148,55 @@ class UI {
       numOfCompletedTodosP.classList.add('completed-todos')
       numOfCompletedTodosP.textContent = `${numOfCompletedTodos} completed`
 
+      const controlsDiv = document.createElement('div')
+      controlsDiv.classList.add('controls')
+
+      const viewDiv = document.createElement('div')
+      viewDiv.classList.add("mdi", "mdi-eye-outline")
+      controlsDiv.appendChild(viewDiv)
+
+      viewDiv.addEventListener('click', () => {
+        // Store.modifyProjectStatus(.id, todo.parentProjectId);
+        console.log('Project viewed !!!')
+        // const updatedProject = Store.getProject(project.id);
+        // this.displayTodos(updatedProject);
+      })
+
+      const editOrViewProjectIconAndDeleteProjectIconDiv =
+        document.createElement('div')
+
+      const editOrViewProjectIcon = document.createElement('span')
+      editOrViewProjectIcon.classList.add('mdi', 'mdi-pencil-outline')
+      editOrViewProjectIconAndDeleteProjectIconDiv.appendChild(
+        editOrViewProjectIcon
+      )
+
+      editOrViewProjectIcon.addEventListener('click', () => {
+        // Store.modifyTodo(todo.id, todo.parentProjectId, project.id);
+        console.log('Project modified!!!')
+      })
+
+      const deleteProjectIcon = document.createElement('span')
+      deleteProjectIcon.classList.add('mdi', 'mdi-delete-outline')
+      editOrViewProjectIconAndDeleteProjectIconDiv.appendChild(
+        deleteProjectIcon
+      )
+
+      deleteProjectIcon.addEventListener('click', () => {
+        console.log('Project deleted!!!')
+        // Store.removeTodoFromProject(todo.id, todo.parentProjectId);
+
+        // const updatedProject = Store.getProject(project.id);
+        // this.displayTodos(updatedProject);
+      })
+
+      controlsDiv.appendChild(editOrViewProjectIconAndDeleteProjectIconDiv)
+
       projectDiv.appendChild(projectName)
       projectDiv.appendChild(numOfTodosP)
       projectDiv.appendChild(numOfIncompleteTodosP)
       projectDiv.appendChild(numOfCompletedTodosP)
+      projectDiv.appendChild(controlsDiv)
 
       contentDiv.appendChild(projectDiv)
     })

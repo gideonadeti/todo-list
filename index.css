@@ -142,7 +142,8 @@ main {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.todo.completed {
+.todo.completed,
+.project.completed {
   background-color: var(--neutral-color);
   box-shadow: var(--shadow-style-2);
 }
@@ -201,18 +202,21 @@ input[type="checkbox"] {
   gap: var(--small);
 }
 
-.todo .mdi {
+.todo .mdi,
+.project .mdi {
   padding: var(--x-small);
   border-radius: var(--x-small);
   font-size: calc(var(--big) - var(--small));
   transition: background-color 0.3s, transform 0.3s;
 }
 
-.todo .mdi:hover {
+.todo .mdi:hover,
+.project .mdi:hover {
   background-color: var(--light-black);
 }
 
-.todo .mdi:active {
+.todo .mdi:active,
+.project .mdi:active {
   transform: scale(0.9);
 }
 

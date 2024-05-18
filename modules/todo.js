@@ -1,15 +1,7 @@
 import { Store } from './store'
 
-let initalId = 0
-
 class Todo {
-  constructor (
-    title,
-    description,
-    dueDate,
-    priority,
-    parentProjectId
-  ) {
+  constructor (title, description, dueDate, priority, parentProjectId) {
     this.title = title
     this.description = description
     this.dueDate = dueDate
@@ -25,7 +17,14 @@ class Todo {
   }
 
   getId () {
-    return initalId++
+    let lastTodoId = parseInt(localStorage.getItem('lastTodoId')) // Get the last stored ID
+    if (isNaN(lastTodoId)) {
+      // Check if lastTodoId is NaN
+      lastTodoId = -1 // Default to -1
+    }
+    lastTodoId++
+    localStorage.setItem('lastTodoId', lastTodoId) // Store the updated ID
+    return lastTodoId
   }
 
   getParentProjectName (parentProjectId) {
