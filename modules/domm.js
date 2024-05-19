@@ -27,6 +27,9 @@ class DOMManipulation {
     this.myTodosDiv = document.querySelector('.my-todos')
     this.myProjectsDiv = document.querySelector('.my-projects')
 
+    this.projectsSelect1 = this.addTodoForm.querySelector('#parent-project-name')
+    this.projectsSelect2 = this.updateTodoForm.querySelector('#parent-project-name')
+
     this.setupEventListeners()
   }
 
@@ -76,6 +79,7 @@ class DOMManipulation {
     if (!document.querySelector('.project-name')) {
       document.querySelector('.add-project-dialog').showModal()
     } else {
+      domManipulation.populateProjectsSelect1()
       document.querySelector('.add-todo-dialog').showModal()
     }
   }
@@ -167,6 +171,48 @@ class DOMManipulation {
   populateUpdateProjectFormValues (project) {
     this.updateProjectForm.querySelector('#project-name').value = project.name
   }
+
+  populateProjectsSelect1 () {
+    const projects = Store.getProjects()
+    const filteredProjects = projects.filter((project) => project.id !== 0)
+
+    this.projectsSelect1.innerHTML = ''
+
+    filteredProjects.forEach((project) => {
+      const option = document.createElement('option')
+      option.value = project.id.toString()
+      option.textContent =
+        project.name.length > 15
+          ? project.name.slice(0, 15) + '...'
+          : project.name
+      if (project.id === 1) {
+        option.selected = true
+      }
+      this.projectsSelect1.appendChild(option)
+    })
+  }
+
+  populateProjectsSelect2 () {
+    const projects = Store.getProjects()
+    const filteredProjects = projects.filter((project) => project.id !== 0)
+
+    this.projectsSelect2.innerHTML = ''
+
+    filteredProjects.forEach((project) => {
+      const option = document.createElement('option')
+      option.value = project.id.toString()
+      option.textContent =
+        project.name.length > 15
+          ? project.name.slice(0, 15) + '...'
+          : project.name
+      if (project.id === 1) {
+        option.selected = true
+      }
+      this.projectsSelect2.appendChild(option)
+    })
+  }
 }
+
+const domManipulation = new DOMManipulation()
 
 export { DOMManipulation }

@@ -110,6 +110,7 @@ class Store {
       domManipulation.closeUpdateTodoDialog()
     }
 
+    domManipulation.populateProjectsSelect2()
     domManipulation.populateUpdateTodoFormValues(todo)
     domManipulation.openUpdateTodoDialog()
     domManipulation.updateTodoForm.addEventListener(
