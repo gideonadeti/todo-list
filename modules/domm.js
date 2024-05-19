@@ -8,27 +8,38 @@ class DOMManipulation {
     this.addTodoDialog = document.querySelector('.add-todo-dialog')
     this.addProjectDialog = document.querySelector('.add-project-dialog')
     this.addTodoForm = this.addTodoDialog.querySelector('.add-todo-form')
-    this.addProjectForm = this.addProjectDialog.querySelector('.add-project-form')
+    this.addProjectForm =
+      this.addProjectDialog.querySelector('.add-project-form')
     this.cancelAddTodoDialogButton = this.addTodoForm.querySelector(
       "button[type='button']"
     )
-    this.cancelAddProjectDialogButton = this.addProjectForm.querySelector('button[type="button"]')
+    this.cancelAddProjectDialogButton = this.addProjectForm.querySelector(
+      'button[type="button"]'
+    )
 
     this.updateTodoDialog = document.querySelector('.update-todo-dialog')
     this.updateProjectDialog = document.querySelector('.update-project-dialog')
     this.updateTodoForm =
       this.updateTodoDialog.querySelector('.update-todo-form')
-    this.updateProjectForm = this.updateProjectDialog.querySelector('.update-project-form')
+    this.updateProjectForm = this.updateProjectDialog.querySelector(
+      '.update-project-form'
+    )
     this.cancelUpdateTodoDialogButton = this.updateTodoForm.querySelector(
       "button[type='button']"
     )
-    this.cancelUpdateProjectDialogButton = this.updateProjectForm.querySelector('button[type="button"]')
+    this.cancelUpdateProjectDialogButton = this.updateProjectForm.querySelector(
+      'button[type="button"]'
+    )
 
     this.myTodosDiv = document.querySelector('.my-todos')
     this.myProjectsDiv = document.querySelector('.my-projects')
 
-    this.projectsSelect1 = this.addTodoForm.querySelector('#parent-project-name')
-    this.projectsSelect2 = this.updateTodoForm.querySelector('#parent-project-name')
+    this.projectsSelect1 = this.addTodoForm.querySelector(
+      '#parent-project-name'
+    )
+    this.projectsSelect2 = this.updateTodoForm.querySelector(
+      '#parent-project-name'
+    )
 
     this.setupEventListeners()
   }
@@ -52,6 +63,10 @@ class DOMManipulation {
 
     this.cancelUpdateTodoDialogButton.addEventListener('click', () => {
       this.closeUpdateTodoDialog()
+    })
+
+    this.cancelUpdateProjectDialogButton.addEventListener('click', () => {
+      this.closeUpdateProjectDialog()
     })
 
     this.myTodosDiv.addEventListener('click', this.handleMyTodosDivClick)

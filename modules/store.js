@@ -89,6 +89,7 @@ class Store {
 
     const updateTodoHandler = (event) => {
       event.preventDefault()
+
       const { title, description, dueDate, priority, parentProjectId } =
         domManipulation.getUpdateTodoFormValues()
       todo.title = title
@@ -108,6 +109,10 @@ class Store {
       const updatedProject = Store.getProject(currentProjectId)
       UI.displayTodos(updatedProject)
       domManipulation.closeUpdateTodoDialog()
+      domManipulation.updateTodoForm.removeEventListener(
+        'submit',
+        updateTodoHandler
+      )
     }
 
     domManipulation.populateProjectsSelect2()
