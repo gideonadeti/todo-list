@@ -41,6 +41,8 @@ class DOMManipulation {
       '#parent-project-name'
     )
 
+    this.dateInputs = document.querySelectorAll('#due-date')
+
     this.setupEventListeners()
   }
 
@@ -76,6 +78,26 @@ class DOMManipulation {
     this.myTodosDiv.addEventListener('click', this.handleMyTodosDivClick)
 
     this.myProjectsDiv.addEventListener('click', this.handleMyProjectsDivClick)
+
+    this.dateInputs.forEach((dateInput) => {
+      dateInput.addEventListener('input', () => {
+        const minDate = new Date(dateInput.min)
+        const maxDate = new Date(dateInput.max)
+        const selectedDate = new Date(dateInput.value)
+
+        if (selectedDate < minDate) {
+          dateInput.setCustomValidity(
+            'The date must be on or after January 1, 2024.'
+          )
+        } else if (selectedDate > maxDate) {
+          dateInput.setCustomValidity(
+            'The date must be on or before January 1, 3024.'
+          )
+        } else {
+          dateInput.setCustomValidity('')
+        }
+      })
+    })
   }
 
   handleNavClick (div) {
