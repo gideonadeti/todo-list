@@ -54,18 +54,22 @@ class DOMManipulation {
     this.addIcon.addEventListener('click', this.handleAddIconClick)
 
     this.cancelAddTodoDialogButton.addEventListener('click', () => {
+      this.clearAddTodoFormValues()
       this.closeAddTodoDialog()
     })
 
     this.cancelAddProjectDialogButton.addEventListener('click', () => {
+      this.clearAddProjectFormValues()
       this.closeAddProjectDialog()
     })
 
     this.cancelUpdateTodoDialogButton.addEventListener('click', () => {
+      this.clearUpdateTodoFormValues()
       this.closeUpdateTodoDialog()
     })
 
     this.cancelUpdateProjectDialogButton.addEventListener('click', () => {
+      this.clearUpdateProjectFormValues()
       this.closeUpdateProjectDialog()
     })
 
@@ -141,6 +145,10 @@ class DOMManipulation {
     this.updateTodoForm.querySelector('#due-date').value = ''
     this.updateTodoForm.querySelector('#priority').value = 'medium'
     this.updateTodoForm.querySelector('#parent-project-name').value = 'Inbox'
+  }
+
+  clearUpdateProjectFormValues() {
+    this.updateProjectForm.querySelector('#project-name').value = ''
   }
 
   getAddTodoFormValues () {
