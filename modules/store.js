@@ -90,19 +90,40 @@ class Store {
     const updateTodoHandler = (event) => {
       event.preventDefault()
 
-      const { title, description, dueDate, priority, parentProjectId } =
+      const { title, description, dueDate, priority, newParentProjectId } =
         domManipulation.getUpdateTodoFormValues()
+
+      const oldParentProjectId = todo.parentProjectId
+
       todo.title = title
       todo.description = description
       todo.dueDate = dueDate
       todo.priority = priority
-      todo.parentProjectId = parentProjectId
+      todo.parentProjectId = newParentProjectId
+      todo.parentProjectName = this.getProjectName(newParentProjectId)
 
       myTodo.title = title
       myTodo.description = description
       myTodo.dueDate = dueDate
       myTodo.priority = priority
-      myTodo.parentProjectId = parentProjectId
+      myTodo.parentProjectId = newParentProjectId
+      myTodo.parentProjectName = this.getProjectName(newParentProjectId)
+
+      if (newParentProjectId !== oldParentProjectId) {
+        // Remove todo from the old parent project
+        const oldParentProject = projects.find(
+          (project) => project.id === oldParentProjectId
+        )
+        oldParentProject.todos = oldParentProject.todos.filter(
+          (todo) => todo.id !== todoId
+        )
+
+        // Add todo to the new parent project
+        const newParentProject = projects.find(
+          (project) => project.id === newParentProjectId
+        )
+        newParentProject.todos.push(todo)
+      }
 
       localStorage.setItem('projects', JSON.stringify(projects))
 

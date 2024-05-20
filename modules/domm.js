@@ -147,7 +147,7 @@ class DOMManipulation {
     this.updateTodoForm.querySelector('#parent-project-name').value = 'Inbox'
   }
 
-  clearUpdateProjectFormValues() {
+  clearUpdateProjectFormValues () {
     this.updateProjectForm.querySelector('#project-name').value = ''
   }
 
@@ -172,7 +172,7 @@ class DOMManipulation {
       description: this.updateTodoForm.querySelector('#description').value,
       dueDate: this.updateTodoForm.querySelector('#due-date').value,
       priority: this.updateTodoForm.querySelector('#priority').value,
-      parentProjectId: +this.updateTodoForm.querySelector(
+      newParentProjectId: +this.updateTodoForm.querySelector(
         '#parent-project-name'
       ).value
     }
