@@ -167,10 +167,10 @@ class Store {
   static handleProjectDeletion (projectId) {
     const projects = this.getProjects()
     const filteredProjects = projects.filter((proj) => proj.id !== projectId)
-    
+
     const removedProject = projects.find((proj) => proj.id === projectId)
     const myTodos = projects.find((project) => project.id === 0)
-    
+
     removedProject.todos.forEach((todo) => {
       myTodos.todos = myTodos.todos.filter((myTodo) => myTodo.id !== todo.id)
     })
