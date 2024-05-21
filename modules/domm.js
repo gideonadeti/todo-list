@@ -174,7 +174,7 @@ class DOMManipulation {
       description: this.updateTodoForm.querySelector('#description').value,
       dueDate: this.updateTodoForm.querySelector('#due-date').value,
       priority: this.updateTodoForm.querySelector('#priority').value,
-      newParentProjectId: +this.updateTodoForm.querySelector(
+      parentProjectId: +this.updateTodoForm.querySelector(
         '#parent-project-name'
       ).value
     }
