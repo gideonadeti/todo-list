@@ -147,8 +147,9 @@ class Store {
 
   static modifyProject (projectId) {
     const projects = this.getProjects()
-
     const project = projects.find((project) => project.id === projectId)
+    const todoIds = []
+    const myTodos = projects.find((project) => project.id === 0)
 
     const updateProjectHandler = (event) => {
       event.preventDefault()
@@ -156,6 +157,17 @@ class Store {
       const updatedName = domManipulation.getUpdateProjectFormValues()
 
       project.name = updatedName
+
+      project.todos.forEach((todo) => {
+        todoIds.push(todo.id)
+        todo.parentProjectName = updatedName
+      })
+
+      myTodos.todos.forEach((todo) => {
+        if (todoIds.includes(todo.id)) {
+          todo.parentProjectName = updatedName
+        }
+      })
 
       localStorage.setItem('projects', JSON.stringify(projects))
       UI.displayProjects()
@@ -175,22 +187,16 @@ class Store {
     const todoIds = []
     const myTodos = projects.find((project) => project.id === 0)
 
-    if (projectId !== 1) {
-      const project = projects.find((project) => project.id === projectId)
-      project.todos.forEach((todo) => {
-        todoIds.push(todo.id)
-      })
+    const project = projects.find((project) => project.id === projectId)
+    project.todos.forEach((todo) => {
+      todoIds.push(todo.id)
+    })
 
-      project.todos = project.todos.filter(
-        (todo) => !todoIds.includes(todo.id)
-      )
-      myTodos.todos = myTodos.todos.filter(
-        (todo) => !todoIds.includes(todo.id)
-      )
+    project.todos = project.todos.filter((todo) => !todoIds.includes(todo.id))
+    myTodos.todos = myTodos.todos.filter((todo) => !todoIds.includes(todo.id))
 
-      projects = projects.filter((project) => project.id !== projectId)
-      localStorage.setItem('projects', JSON.stringify(projects))
-    }
+    projects = projects.filter((project) => project.id !== projectId)
+    localStorage.setItem('projects', JSON.stringify(projects))
   }
 }
 
