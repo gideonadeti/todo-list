@@ -3,6 +3,14 @@ import { UI } from './ui'
 
 class DOMManipulation {
   constructor () {
+    // Initialize DOM elements
+    this.initializeDOMElements()
+
+    // Setup event listeners
+    this.setupEventListeners()
+  }
+
+  initializeDOMElements () {
     this.navDivs = document.querySelectorAll('nav div')
     this.addIcon = document.querySelector('.add-icon')
     this.addTodoDialog = document.querySelector('.add-todo-dialog')
@@ -10,13 +18,6 @@ class DOMManipulation {
     this.addTodoForm = this.addTodoDialog.querySelector('.add-todo-form')
     this.addProjectForm =
       this.addProjectDialog.querySelector('.add-project-form')
-    this.cancelAddTodoDialogButton = this.addTodoForm.querySelector(
-      "button[type='button']"
-    )
-    this.cancelAddProjectDialogButton = this.addProjectForm.querySelector(
-      'button[type="button"]'
-    )
-
     this.updateTodoDialog = document.querySelector('.update-todo-dialog')
     this.updateProjectDialog = document.querySelector('.update-project-dialog')
     this.updateTodoForm =
@@ -24,87 +25,103 @@ class DOMManipulation {
     this.updateProjectForm = this.updateProjectDialog.querySelector(
       '.update-project-form'
     )
-    this.cancelUpdateTodoDialogButton = this.updateTodoForm.querySelector(
-      "button[type='button']"
-    )
-    this.cancelUpdateProjectDialogButton = this.updateProjectForm.querySelector(
-      'button[type="button"]'
-    )
-
     this.myTodosDiv = document.querySelector('.my-todos')
     this.myProjectsDiv = document.querySelector('.my-projects')
-
     this.projectsSelect1 = this.addTodoForm.querySelector(
       '#parent-project-name'
     )
     this.projectsSelect2 = this.updateTodoForm.querySelector(
       '#parent-project-name'
     )
-
     this.dateInputs = document.querySelectorAll('#due-date')
-
-    this.setupEventListeners()
   }
 
   setupEventListeners () {
+    // Navigation clicks
     this.navDivs.forEach((div) => {
       div.addEventListener('click', () => {
         this.handleNavClick(div)
       })
     })
 
-    this.addIcon.addEventListener('click', this.handleAddIconClick)
+    // Add icon click
+    this.addIcon.addEventListener('click', this.handleAddIconClick.bind(this))
 
-    this.cancelAddTodoDialogButton.addEventListener('click', () => {
-      this.clearAddTodoFormValues()
-      this.closeAddTodoDialog()
+    // Cancel buttons
+    this.addTodoForm
+      .querySelector("button[type='button']")
+      .addEventListener('click', () => {
+        this.handleDialogCancelButton(
+          this.addTodoForm,
+          this.clearAddTodoFormValues.bind(this)
+        )
+      })
+
+    this.addProjectForm
+      .querySelector('button[type="button"]')
+      .addEventListener('click', () => {
+        this.handleDialogCancelButton(
+          this.addProjectForm,
+          this.clearAddProjectFormValues.bind(this)
+        )
+      })
+
+    this.updateTodoForm
+      .querySelector("button[type='button']")
+      .addEventListener('click', () => {
+        this.handleDialogCancelButton(
+          this.updateTodoForm,
+          this.clearUpdateTodoFormValues.bind(this)
+        )
+      })
+
+    this.updateProjectForm
+      .querySelector('button[type="button"]')
+      .addEventListener('click', () => {
+        this.handleDialogCancelButton(
+          this.updateProjectForm,
+          this.clearUpdateProjectFormValues.bind(this)
+        )
+      })
+
+    // My Todos and My Projects clicks
+    this.myTodosDiv.addEventListener('click', () => {
+      this.handleMyTodosDivClick()
     })
 
-    this.cancelAddProjectDialogButton.addEventListener('click', () => {
-      this.clearAddProjectFormValues()
-      this.closeAddProjectDialog()
+    this.myProjectsDiv.addEventListener('click', () => {
+      this.handleMyProjectsDivClick()
     })
 
-    this.cancelUpdateTodoDialogButton.addEventListener('click', () => {
-      this.clearUpdateTodoFormValues()
-      this.closeUpdateTodoDialog()
-    })
-
-    this.cancelUpdateProjectDialogButton.addEventListener('click', () => {
-      this.clearUpdateProjectFormValues()
-      this.closeUpdateProjectDialog()
-    })
-
-    this.myTodosDiv.addEventListener('click', this.handleMyTodosDivClick)
-
-    this.myProjectsDiv.addEventListener('click', this.handleMyProjectsDivClick)
-
+    // Date inputs validation
     this.dateInputs.forEach((dateInput) => {
       dateInput.addEventListener('input', () => {
-        const minDate = new Date(dateInput.min)
-        const maxDate = new Date(dateInput.max)
-        const selectedDate = new Date(dateInput.value)
-
-        if (selectedDate < minDate) {
-          dateInput.setCustomValidity(
-            'The date must be on or after January 1, 2024.'
-          )
-        } else if (selectedDate > maxDate) {
-          dateInput.setCustomValidity(
-            'The date must be on or before January 1, 3024.'
-          )
-        } else {
-          dateInput.setCustomValidity('')
-        }
+        this.handleDateInputValidation(dateInput)
       })
     })
   }
+
+  // Event handlers
 
   handleNavClick (div) {
     this.navDivs.forEach((navDiv) => {
       navDiv.classList.remove('focus')
     })
     div.classList.add('focus')
+  }
+
+  handleAddIconClick () {
+    if (!document.querySelector('.project-name')) {
+      this.openAddProjectDialog()
+    } else {
+      this.populateProjectsSelect1()
+      this.openAddTodoDialog()
+    }
+  }
+
+  handleDialogCancelButton (form, clearFunction) {
+    clearFunction()
+    form.closest('dialog').close()
   }
 
   handleMyTodosDivClick () {
@@ -116,62 +133,25 @@ class DOMManipulation {
     UI.displayProjects()
   }
 
-  handleAddIconClick () {
-    if (!document.querySelector('.project-name')) {
-      document.querySelector('.add-project-dialog').showModal()
+  handleDateInputValidation (dateInput) {
+    const minDate = new Date(dateInput.min)
+    const maxDate = new Date(dateInput.max)
+    const selectedDate = new Date(dateInput.value)
+
+    if (selectedDate < minDate) {
+      dateInput.setCustomValidity(
+        'The date must be on or after January 1, 2024.'
+      )
+    } else if (selectedDate > maxDate) {
+      dateInput.setCustomValidity(
+        'The date must be on or before January 1, 3024.'
+      )
     } else {
-      domManipulation.populateProjectsSelect1()
-      document.querySelector('.add-todo-dialog').showModal()
+      dateInput.setCustomValidity('')
     }
   }
 
-  openUpdateTodoDialog () {
-    this.updateTodoDialog.showModal()
-  }
-
-  openUpdateProjectDialog () {
-    this.updateProjectDialog.showModal()
-  }
-
-  closeAddTodoDialog () {
-    this.addTodoDialog.close()
-  }
-
-  closeAddProjectDialog () {
-    this.addProjectDialog.close()
-  }
-
-  closeUpdateTodoDialog () {
-    this.updateTodoDialog.close()
-  }
-
-  closeUpdateProjectDialog () {
-    this.updateProjectDialog.close()
-  }
-
-  clearAddTodoFormValues () {
-    this.addTodoForm.querySelector('#title').value = ''
-    this.addTodoForm.querySelector('#description').value = ''
-    this.addTodoForm.querySelector('#due-date').value = ''
-    this.addTodoForm.querySelector('#priority').value = 'medium'
-    this.addTodoForm.querySelector('#parent-project-name').value = '1'
-  }
-
-  clearAddProjectFormValues () {
-    this.addProjectForm.querySelector('#project-name').value = ''
-  }
-
-  clearUpdateTodoFormValues () {
-    this.updateTodoForm.querySelector('#title').value = ''
-    this.updateTodoForm.querySelector('#description').value = ''
-    this.updateTodoForm.querySelector('#due-date').value = ''
-    this.updateTodoForm.querySelector('#priority').value = 'medium'
-    this.updateTodoForm.querySelector('#parent-project-name').value = 'Inbox'
-  }
-
-  clearUpdateProjectFormValues () {
-    this.updateProjectForm.querySelector('#project-name').value = ''
-  }
+  // Form values
 
   getAddTodoFormValues () {
     return {
@@ -204,60 +184,134 @@ class DOMManipulation {
     return this.updateProjectForm.querySelector('#project-name').value
   }
 
-  populateUpdateTodoFormValues (todo) {
-    this.updateTodoForm.querySelector('#title').value = todo.title
-    this.updateTodoForm.querySelector('#description').value = todo.description
-    this.updateTodoForm.querySelector('#due-date').value = todo.dueDate
-    this.updateTodoForm.querySelector('#priority').value = todo.priority
-    this.updateTodoForm.querySelector('#parent-project-name').value =
-      todo.parentProjectId.toString()
+  // Open dialogs
+
+  openAddTodoDialog () {
+    this.addTodoDialog.showModal()
   }
 
-  populateUpdateProjectFormValues (project) {
-    this.updateProjectForm.querySelector('#project-name').value = project.name
+  openAddProjectDialog () {
+    this.addProjectDialog.showModal()
   }
+
+  openUpdateTodoDialog () {
+    this.updateTodoDialog.showModal()
+  }
+
+  openUpdateProjectDialog () {
+    this.updateProjectDialog.showModal()
+  }
+
+  // Close dialogs
+
+  closeAddTodoDialog () {
+    this.addTodoDialog.close()
+  }
+
+  closeAddProjectDialog () {
+    this.addProjectDialog.close()
+  }
+
+  closeUpdateTodoDialog () {
+    this.updateTodoDialog.close()
+  }
+
+  closeUpdateProjectDialog () {
+    this.updateProjectDialog.close()
+  }
+
+  // Clear form values
+
+  clearAddTodoFormValues () {
+    this.clearFormFields(
+      this.addTodoForm,
+      ['#title', '#description', '#due-date'],
+      'medium',
+      '1'
+    )
+  }
+
+  clearAddProjectFormValues () {
+    this.clearFormFields(this.addProjectForm, ['#project-name'])
+  }
+
+  clearUpdateTodoFormValues () {
+    this.clearFormFields(
+      this.updateTodoForm,
+      ['#title', '#description', '#due-date'],
+      'medium',
+      '1'
+    )
+  }
+
+  clearUpdateProjectFormValues () {
+    this.clearFormFields(this.updateProjectForm, ['#project-name'])
+  }
+
+  clearFormFields (form, fields, priority = '', projectId = '') {
+    fields.forEach((field) => {
+      form.querySelector(field).value = ''
+    })
+    if (priority) {
+      form.querySelector('#priority').value = priority
+    }
+    if (projectId) {
+      form.querySelector('#parent-project-name').value = projectId
+    }
+  }
+
+  // Populate projects select
 
   populateProjectsSelect1 () {
-    const projects = Store.getProjects()
-    const filteredProjects = projects.filter((project) => project.id !== 0)
-
-    this.projectsSelect1.innerHTML = ''
-
-    filteredProjects.forEach((project) => {
-      const option = document.createElement('option')
-      option.value = project.id.toString()
-      option.textContent =
-        project.name.length > 15
-          ? project.name.slice(0, 15) + '...'
-          : project.name
-      if (project.id === 1) {
-        option.selected = true
-      }
-      this.projectsSelect1.appendChild(option)
-    })
+    this.populateProjectsSelect(this.projectsSelect1)
   }
 
   populateProjectsSelect2 () {
+    this.populateProjectsSelect(this.projectsSelect2)
+  }
+
+  populateProjectsSelect (selectElement) {
     const projects = Store.getProjects()
     const filteredProjects = projects.filter((project) => project.id !== 0)
 
-    this.projectsSelect2.innerHTML = ''
+    selectElement.innerHTML = ''
 
     filteredProjects.forEach((project) => {
       const option = document.createElement('option')
       option.value = project.id.toString()
       option.textContent =
-        project.name.length > 15
-          ? project.name.slice(0, 15) + '...'
+        project.name.length > 30
+          ? project.name.slice(0, 30) + '...'
           : project.name
       if (project.id === 1) {
         option.selected = true
       }
-      this.projectsSelect2.appendChild(option)
+      selectElement.appendChild(option)
+    })
+  }
+
+  // Populate form values
+  populateUpdateTodoFormValues (todo) {
+    this.populateFormFields(this.updateTodoForm, {
+      '#title': todo.title,
+      '#description': todo.description,
+      '#due-date': todo.dueDate,
+      '#priority': todo.priority,
+      '#parent-project-name': todo.parentProjectId.toString()
+    })
+  }
+
+  populateUpdateProjectFormValues (project) {
+    this.populateFormFields(this.updateProjectForm, {
+      '#project-name': project.name
+    })
+  }
+
+  populateFormFields (form, fieldValues) {
+    Object.entries(fieldValues).forEach(([selector, value]) => {
+      form.querySelector(selector).value = value
     })
   }
 }
-
-const domManipulation = new DOMManipulation()
 
 export { DOMManipulation }
