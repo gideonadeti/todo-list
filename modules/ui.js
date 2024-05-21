@@ -11,9 +11,20 @@ class UI {
     contentDiv.innerHTML = ''
 
     UI.createHeading(headingDiv, project.name)
-    project.todos.forEach((todo) =>
-      UI.createTodoElement(contentDiv, todo, project)
-    )
+    if (project.todos.length === 0) {
+      contentDiv.classList.add('empty')
+      const emptyMessage = UI.createElement(
+        'h2',
+        'empty-message',
+        'No todos available.'
+      )
+      contentDiv.appendChild(emptyMessage)
+    } else {
+      contentDiv.classList.remove('empty')
+      project.todos.forEach((todo) =>
+        UI.createTodoElement(contentDiv, todo, project)
+      )
+    }
 
     containerDiv.appendChild(headingDiv)
     containerDiv.appendChild(contentDiv)
@@ -26,6 +37,8 @@ class UI {
 
     headingDiv.innerHTML = ''
     contentDiv.innerHTML = ''
+
+    contentDiv.classList.remove('empty')
 
     UI.createHeading(headingDiv, 'My Projects')
     const projects = Store.getProjects().filter((project) => project.id !== 0)
