@@ -172,10 +172,25 @@ class Store {
 
   static removeProject (projectId) {
     let projects = this.getProjects()
+    const todoIds = []
+    const myTodos = projects.find((project) => project.id === 0)
 
-    projects = projects.filter((project) => project.id !== projectId)
+    if (projectId !== 1) {
+      const project = projects.find((project) => project.id === projectId)
+      project.todos.forEach((todo) => {
+        todoIds.push(todo.id)
+      })
 
-    localStorage.setItem('projects', JSON.stringify(projects))
+      project.todos = project.todos.filter(
+        (todo) => !todoIds.includes(todo.id)
+      )
+      myTodos.todos = myTodos.todos.filter(
+        (todo) => !todoIds.includes(todo.id)
+      )
+
+      projects = projects.filter((project) => project.id !== projectId)
+      localStorage.setItem('projects', JSON.stringify(projects))
+    }
   }
 }
 
