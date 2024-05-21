@@ -62,7 +62,7 @@ class UI {
       controlsDiv.appendChild(todoStatus)
 
       todoStatus.addEventListener('change', () => {
-        Store.modifyTodoStatus(todo.id, todo.parentProjectId)
+        Store.handleTodoStatusChange(todo.id, todo.parentProjectId)
 
         const updatedProject = Store.getProject(project.id)
         this.displayTodos(updatedProject)
@@ -76,7 +76,7 @@ class UI {
       editOrViewTodoIconAndDeleteTodoIconDiv.appendChild(editOrViewTodoIcon)
 
       editOrViewTodoIcon.addEventListener('click', () => {
-        Store.modifyTodo(todo.id, todo.parentProjectId, project.id)
+        Store.handleTodoModification(todo.id, todo.parentProjectId, project.id)
       })
 
       const deleteTodoIcon = document.createElement('span')
@@ -167,7 +167,7 @@ class UI {
 
       editProjectIcon.addEventListener('click', () => {
         if (project.id !== 1) {
-          Store.modifyProject(project.id)
+          Store.handleProjectModification(project.id)
         }
       })
 
@@ -177,7 +177,7 @@ class UI {
 
       deleteProjectIcon.addEventListener('click', () => {
         if (project.id !== 1) {
-          Store.removeProject(project.id)
+          Store.handleProjectDeletion(project.id)
           this.displayProjects()
         }
       })
