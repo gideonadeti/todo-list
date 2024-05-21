@@ -166,7 +166,9 @@ class UI {
       editAndDeleteProjectIconsDiv.appendChild(editProjectIcon)
 
       editProjectIcon.addEventListener('click', () => {
-        Store.modifyProject(project.id)
+        if (project.id !== 1) {
+          Store.modifyProject(project.id)
+        }
       })
 
       const deleteProjectIcon = document.createElement('span')
@@ -174,8 +176,10 @@ class UI {
       editAndDeleteProjectIconsDiv.appendChild(deleteProjectIcon)
 
       deleteProjectIcon.addEventListener('click', () => {
-        Store.removeProject(project.id)
-        this.displayProjects()
+        if (project.id !== 1) {
+          Store.removeProject(project.id)
+          this.displayProjects()
+        }
       })
 
       controlsDiv.appendChild(editAndDeleteProjectIconsDiv)
