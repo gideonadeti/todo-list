@@ -368,6 +368,7 @@ dialog[open]::backdrop {
 
   .empty {
     margin-top: 20vh;
+    justify-content: center;
   }
 
   .add-icon {
