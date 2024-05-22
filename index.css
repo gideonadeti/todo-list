@@ -362,6 +362,8 @@ dialog[open]::backdrop {
 
   .content {
     align-self: center;
+    width: 100%;
+    max-width: 300px;
   }
 
   .empty {

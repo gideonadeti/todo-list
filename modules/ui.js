@@ -136,6 +136,7 @@ class UI {
     controlsDiv.classList.add('controls')
 
     const viewDiv = UI.createElement('div', 'mdi mdi-eye-outline', '')
+    viewDiv.title = 'View project'
     viewDiv.addEventListener('click', () => UI.displayTodos(project))
     controlsDiv.appendChild(viewDiv)
 
@@ -178,12 +179,14 @@ class UI {
     const iconsDiv = document.createElement('div')
 
     const editIcon = UI.createElement('span', 'mdi mdi-pencil-outline', '')
+    editIcon.title = 'Edit/View todo'
     editIcon.addEventListener('click', () =>
       Store.handleTodoModification(todo.id, todo.parentProjectId, project.id)
     )
     iconsDiv.appendChild(editIcon)
 
     const deleteIcon = UI.createElement('span', 'mdi mdi-delete-outline', '')
+    deleteIcon.title = 'Delete todo'
     deleteIcon.addEventListener('click', () => {
       Store.removeTodoFromProject(todo.id, todo.parentProjectId)
       UI.displayTodos(Store.getProject(project.id))
@@ -197,6 +200,7 @@ class UI {
     const iconsDiv = document.createElement('div')
 
     const editIcon = UI.createElement('span', 'mdi mdi-pencil-outline', '')
+    editIcon.title = 'Edit project name'
     editIcon.addEventListener('click', () => {
       if (project.id !== 1) {
         Store.handleProjectModification(project.id)
@@ -205,6 +209,7 @@ class UI {
     iconsDiv.appendChild(editIcon)
 
     const deleteIcon = UI.createElement('span', 'mdi mdi-delete-outline', '')
+    deleteIcon.title = 'Delete project'
     deleteIcon.addEventListener('click', () => {
       if (project.id !== 1) {
         Store.handleProjectDeletion(project.id)
